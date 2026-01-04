@@ -11,10 +11,10 @@ public class WorkoutSession {
     private GymTrainer trainer;
 
     public WorkoutSession(String sessionId, String date, int durationMinutes, String intensityLevel){
-        this.sessionId = sessionId;
-        this.date = date;
-        this.durationMinutes = durationMinutes;
-        this.intensityLevel = intensityLevel;
+        setSessionId(sessionId);
+        setDate(date);
+        setDurationMinutes(durationMinutes);
+        setIntensityLevel(intensityLevel);
         this.caloriesBurned = 0.0;
         this.active = false;
         this.member = null;
@@ -49,19 +49,41 @@ public class WorkoutSession {
 
     // Setters
     public void setSessionId(String sessionId){
-        this.sessionId = sessionId;
+        if(sessionId != null && !sessionId.trim().isEmpty()){
+            this.sessionId = sessionId;
+        }else{
+            System.out.println("Warning: SessionID cannot be empty!");
+        }
     }
     public void setDate(String date){
-        this.date = date;
+        if(date != null && !date.trim().isEmpty()){
+            this.date = date;
+        }else{
+            System.out.println("Warning: Date cannot be empty!");
+        }
     }
     public void setDurationMinutes(int durationMinutes){
-        this.durationMinutes = durationMinutes;
+        if(durationMinutes > 0){
+            this.durationMinutes = durationMinutes;
+        }else{
+            System.out.println("Warning: Duration cannot be negative or 0! Setting to 60.");
+            this.durationMinutes = 60;
+        }
     }
     public void setCaloriesBurned(double caloriesBurned){
-        this.caloriesBurned = caloriesBurned;
+        if(caloriesBurned >= 0){
+            this.caloriesBurned = caloriesBurned;
+        }else{
+            System.out.println("Warning: Calories cannot be negative! Setting to 0.");
+            this.caloriesBurned = 0;
+        }
     }
     public void setIntensityLevel(String intensityLevel){
-        this.intensityLevel = intensityLevel;
+        if(intensityLevel != null && !intensityLevel.trim().isEmpty()){
+            this.intensityLevel = intensityLevel;
+        }else{
+            System.out.println("Warning: Intensity level cannot be empty!");
+        }
     }
     public void setActive(boolean active) {
         this.active = active;
@@ -86,10 +108,11 @@ public class WorkoutSession {
         if(!this.active){
             System.out.println("Session " + sessionId + " is not active.");
             return;
+        }else{
+            this.active = false;
+            calculateCalories();
+            System.out.println("Session " + sessionId + " ended. Calories burned: " + this.caloriesBurned);
         }
-        this.active = false;
-        calculateCalories();
-        System.out.println("Session " + sessionId + " ended. Calories burned: " + this.caloriesBurned);
     }
 
     public double calculateCalories(){

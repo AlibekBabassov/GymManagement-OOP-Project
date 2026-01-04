@@ -1,99 +1,213 @@
 package com.alibek.gym;
+import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
+    private static ArrayList<GymMember> gymMembers = new ArrayList<>();
+    private static ArrayList<GymTrainer> gymTrainers = new ArrayList<>();
+    private static ArrayList<WorkoutSession> workoutSessions = new ArrayList<>();
+
+    private static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        System.out.println("Welcome to the Gym Management System!");
-        System.out.println("This system helps manage members, trainers, and workout plans.");
-        System.out.println("Features planned:");
-        System.out.println("- Member registration and membership tracking");
-        System.out.println("- Trainer schedules and workout plans");
-        System.out.println("Developed by: Alibek, Object-Oriented Programming Course");
-        System.out.println();
-        System.out.println("---------------------------------------------------------");
-        System.out.println();
+        gymMembers.add(new GymMember("Aslan", 18, 60, 175, true));
+        gymMembers.add(new GymMember("Alem", 27, 70, 180, true));
+        gymMembers.add(new GymMember("Sanzhar", 14, 65, 175, true));
+        gymTrainers.add(new GymTrainer("Aibar", "Strength", 5, 500000, true));
+        gymTrainers.add(new GymTrainer("Asel",  "Weight Lose", 3, 300000, true));
+        workoutSessions.add(new WorkoutSession("0001", "01.01.2026", 90, "High"));
+        workoutSessions.add(new WorkoutSession("0002", "02.01.2026", 60, "Low"));
 
-        GymMember member1 = new GymMember("Alibek", 18, 61, 1.70, false);
-        GymMember member2 = new GymMember("Zhiger", 20, 70, 1.85, false);
-
-        GymTrainer trainer1 = new GymTrainer("Eldos", "Strength", 3, 300000.0, true);
-        GymTrainer trainer2 = new GymTrainer("Marat", "Weight Loss", 5, 250000, true);
-
-        WorkoutSession session1 = new WorkoutSession("0001", "2026-01-01", 60, "High");
-
-        System.out.println("--- MEMBERS ---");
-        System.out.println(member1);
-        System.out.println(member2);
-        System.out.println();
-
-        System.out.println("--- TRAINERS ---");
-        System.out.println(trainer1);
-        System.out.println(trainer2);
-        System.out.println();
-
-        System.out.println("--- SESSIONS ---");
-        System.out.println(session1);
-        System.out.println();
-
-        System.out.println("---TESTING GETTERS---");
-        System.out.println("Member1 name is " + member1.getName() + ".");
-        System.out.println("Member2 age is " + member2.getAge() + ".");
-        System.out.println("Trainer1's experience years:  " + trainer1.getExperienceYears() + " year.");
-        System.out.println("Trainer2's salary: " + trainer2.getSalary() + " KZT.");
-        System.out.println("Session1's ID: " + session1.getSessionId() + ".");
-        System.out.println();
-
-        System.out.println("---TESTING SETTERS---");
-        System.out.println("Updating member2...");
-        member2.setName("Nurhan");
-        member2.setAge(17);
-        member2.setWeightKg(55);
-        member2.setHeightMeters(170);
-        member2.setMembershipActive(true);
-        System.out.println("Updated: " + member2);
-        System.out.println();
-
-        System.out.println("Updating trainer1...");
-        trainer1.setName("Zhandos");
-        trainer1.setSpecialization("Fitness");
-        trainer1.setExperienceYears(2);
-        trainer1.setSalary(400000);
-        trainer1.setAvailable(false);
-        System.out.println("Updated: " + trainer1);
-        System.out.println();
-
-        System.out.println("--- TESTING GYMMEMBER METHODS---");
-        member1.activateMembership();
-        System.out.printf("BMI of member1: %.2f \n", member1.calculateBMI());
-        System.out.printf("Member2 can train -> %b", member2.canTrain());
-        System.out.println();
-        System.out.println();
-
-        System.out.println("--- TESTING GYMTRAINER METHODS---");
-        System.out.printf("Is trainer2 experienced? -> %b\n", trainer2.isExperienced());
-        trainer2.increaseSalary(10);
-        trainer1.assignWorkout(session1, member1);
-        trainer2.assignWorkout(session1, member1);
-        System.out.println();
-
-        System.out.println("--- TESTING WORKOUTSESSION METHODS---");
-        session1.startSession();
-        session1.endSession();
-        System.out.println();
-
-        System.out.println("---FINAL STATE---");
-        System.out.println("Gym Members:");
-        System.out.println(member1);
-        System.out.println(member2);
-        System.out.println();
-        System.out.println("Gym Trainers:");
-        System.out.println(trainer1);
-        System.out.println(trainer2);
-        System.out.println();
-        System.out.println("Workout Session:");
-        System.out.println(session1);
-        System.out.println("\n===Program Complete===");
-
-
-
+        boolean running = true;
+        while (running) {
+            displayMenu();
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    addMember();
+                    break;
+                case 2:
+                    viewAllMembers();
+                    break;
+                case 3:
+                    addTrainer();
+                    break;
+                case 4:
+                    viewAllTrainers();
+                    break;
+                case 5:
+                    addSession();
+                    break;
+                case 6:
+                    viewAllSessions();
+                    break;
+                case 0:
+                    System.out.println("\nGoodbye! ");
+                    running = false;
+                    break;
+                default:
+                    System.out.println("\n Invalid choice!");
+            }
+            if (running) {
+                System.out.println("\nPress Enter to continue...");
+                scanner.nextLine();
+            }
+        }
+        scanner.close();
     }
+    private static void displayMenu() {
+        System.out.println("\n========================================");
+        System.out.println("                GYM SYSTEM              ");
+        System.out.println("========================================");
+        System.out.println("1. Add Member");
+        System.out.println("2. View All Members");
+        System.out.println("3. Add Trainer");
+        System.out.println("4. View All Trainers");
+        System.out.println("5. Add Session");
+        System.out.println("6. View All Sessions");
+        System.out.println("0. Exit");
+        System.out.println("========================================");
+        System.out.print("Enter your choice: ");
+    }
+
+    private static void addMember() {
+        System.out.println("\n--- ADD MEMBER ---");
+
+        System.out.print("Enter member name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter weight(Kg): ");
+        double weightKg = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.print("Enter height: ");
+        double heightMeters = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.print("Is membership active? (true/false): ");
+        boolean membershipActive = scanner.nextBoolean();
+        scanner.nextLine();
+
+        GymMember item = new GymMember(name, age, weightKg, heightMeters, membershipActive);
+
+        gymMembers.add(item);
+        System.out.println("\nMember added successfully! ✅");
+    }
+    private static void viewAllMembers() {
+        System.out.println("\n========================================");
+        System.out.println("                ALL MEMBERS             ");
+        System.out.println("========================================");
+        if (gymMembers.isEmpty()) {
+            System.out.println("No members found.");
+            return;
+        }
+        System.out.println("Total members: " + gymMembers.size());
+        System.out.println();
+
+        for (int i = 0; i < gymMembers.size(); i++) {
+            GymMember item = gymMembers.get(i);
+            System.out.println((i + 1) + ". " + item.getName());
+            System.out.println(" Age: " + item.getAge());
+            System.out.println(" Weight: " + item.getWeightKg());
+            System.out.println(" Height: " + item.getHeightMeters());
+            System.out.println(" Membership active: " +
+                    (item.isMembershipActive() ? " Yes ✅" : " No ❌"));
+            if (item.canTrain()) {
+                System.out.println(" He(she) can train!🏋️‍♂️");
+            }else{
+                System.out.println(" He(she) can Not train!🤷‍♂️");
+            }
+            System.out.println();
+        }
+    }
+    private static void addTrainer() {
+        System.out.println("\n--- ADD TRAINER ---");
+
+        System.out.print("Enter trainer name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter specialization: ");
+        String specialization = scanner.nextLine();
+        System.out.print("Enter experience years: ");
+        int experienceYears = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter salary: ");
+        double salary = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.print("Is available? (true/false): ");
+        boolean available = scanner.nextBoolean();
+        scanner.nextLine();
+
+        GymTrainer item = new GymTrainer(name, specialization, experienceYears, salary, available);
+
+        gymTrainers.add(item);
+        System.out.println("\nTrainer added successfully! ✅");
+    }
+    private static void viewAllTrainers() {
+        System.out.println("\n========================================");
+        System.out.println("                ALL TRAINERS             ");
+        System.out.println("========================================");
+        if (gymTrainers.isEmpty()) {
+            System.out.println("No trainers found.");
+            return;
+        }
+        System.out.println("Total trainers: " + gymTrainers.size());
+        System.out.println();
+
+        for (int i = 0; i < gymTrainers.size(); i++) {
+            GymTrainer item = gymTrainers.get(i);
+            System.out.println((i + 1) + ". " + item.getName());
+            System.out.println(" Specialization: " + item.getSpecialization());
+            System.out.println(" Experience years: " + item.getExperienceYears());
+            System.out.println(" Salary: " + item.getSalary());
+            System.out.println(" Available: " +
+                    (item.isAvailable() ? " Yes ✅" : " No ❌"));
+            if (item.isExperienced()) {
+                System.out.println(" He(she) is experienced!👍️");
+            }else{
+                System.out.println(" He(she) is Not experienced!🤏");
+            }
+            System.out.println();
+        }
+    }
+    private static void addSession() {
+        System.out.println("\n--- ADD SESSION ---");
+
+        System.out.print("Enter session ID: ");
+        String sessionId = scanner.nextLine();
+        System.out.print("Enter date: ");
+        String date = scanner.nextLine();
+        System.out.print("Enter duration in minutes: ");
+        int durationMinutes = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter intensity level: ");
+        String intensityLevel = scanner.nextLine();
+
+
+        WorkoutSession item = new WorkoutSession(sessionId, date, durationMinutes, intensityLevel);
+
+        workoutSessions.add(item);
+        System.out.println("\nSession added successfully! ✅");
+    }
+    private static void viewAllSessions() {
+        System.out.println("\n========================================");
+        System.out.println("                ALL SESSIONS             ");
+        System.out.println("========================================");
+        if (workoutSessions.isEmpty()) {
+            System.out.println("No sessions found.");
+            return;
+        }
+        System.out.println("Total sessions: " + workoutSessions.size());
+        System.out.println();
+
+        for (int i = 0; i < workoutSessions.size(); i++) {
+            WorkoutSession item = workoutSessions.get(i);
+            System.out.println((i + 1) + ". " + item.getSessionId());
+            System.out.println(" Date: " + item.getDate());
+            System.out.println(" Duration in minutes: " + item.getDurationMinutes());
+            System.out.println(" Intensity level: " + item.getIntensityLevel());
+            System.out.println();
+        }
+    }
+
 }
