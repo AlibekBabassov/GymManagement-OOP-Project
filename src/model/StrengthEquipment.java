@@ -1,4 +1,4 @@
-package com.alibek.gym;
+package model;
 
 public class StrengthEquipment extends Equipment {
     private double maxWeightKg;
@@ -24,12 +24,10 @@ public class StrengthEquipment extends Equipment {
 
     // setters
     public void setMaxWeightKg(double maxWeightKg) {
-        if (maxWeightKg > 0) {
-            this.maxWeightKg = maxWeightKg;
-        } else {
-            System.out.println("Warning: maxWeightKg must be positive! Setting to 50.0.");
-            this.maxWeightKg = 50.0;
+        if (maxWeightKg <= 0) {
+            throw new IllegalArgumentException("Max weight cannot be negative and zero");
         }
+        this.maxWeightKg = maxWeightKg;
     }
     public void setAdjustable(boolean adjustable) {
         this.isAdjustable = adjustable;
@@ -38,6 +36,11 @@ public class StrengthEquipment extends Equipment {
     @Override
     public String getEquipmentInfo() {
         return super.getEquipmentInfo() + ", Type: " + getEquipmentType() + ", Max weight: " + maxWeightKg + " kg" + ", Adjustable: " + (isAdjustable ? "Yes" : "No");
+    }
+
+    @Override
+    public void start(){
+        System.out.println(equipmentType + " exercise is starting");
     }
 
     @Override

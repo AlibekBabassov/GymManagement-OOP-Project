@@ -1,4 +1,4 @@
-package com.alibek.gym;
+package model;
 
 public class GymTrainer {
     private String name;
@@ -38,34 +38,34 @@ public class GymTrainer {
 
     // Setters
     public void setName(String name){
-        if(name != null && !name.trim().isEmpty()){
-            this.name = name;
-        }else{
-            System.out.println("Warning: Name cannot be empty!");
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Trainer name cannot be empty");
         }
+        if (name.length() < 3) {
+            throw new IllegalArgumentException("Trainer name must be at least 3 characters");
+        }
+        this.name = name;
     }
     public void setSpecialization(String specialization){
-        if(specialization != null && !specialization.trim().isEmpty()){
-            this.specialization = specialization;
-        }else{
-            System.out.println("Warning: Specialization cannot be empty!");
+        if (specialization == null || specialization.trim().isEmpty()) {
+            throw new IllegalArgumentException("Specialization cannot be empty");
         }
+        if (specialization.length() < 5) {
+            throw new IllegalArgumentException("Specialization must be at least 5 characters");
+        }
+        this.specialization = specialization;
     }
     public void setExperienceYears(int experienceYears){
-        if(experienceYears >= 0){
-            this.experienceYears = experienceYears;
-        }else{
-            System.out.println("Warning: Experience year cannot be negative! Setting to 0.");
-            this.experienceYears = 0;
+        if (experienceYears < 0) {
+            throw new IllegalArgumentException("Experience year cannot be negative");
         }
+        this.experienceYears = experienceYears;
     }
     public void setSalary(double salary){
-        if(salary >= 0){
-            this.salary = salary;
-        }else{
-            System.out.println("Warning: Salary cannot be negative! Setting to 200000.");
-            this.salary = 200000;
+        if (salary < 0) {
+            throw new IllegalArgumentException("Salary cannot be negative");
         }
+        this.salary = salary;
     }
     public void setAvailable(boolean available){
         this.available = available;

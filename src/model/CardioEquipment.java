@@ -1,4 +1,4 @@
-package com.alibek.gym;
+package model;
 
 public class CardioEquipment extends Equipment {
     private double maxSpeedKph;
@@ -24,12 +24,10 @@ public class CardioEquipment extends Equipment {
 
     // setters
     public void setMaxSpeedKph(double maxSpeedKph) {
-        if (maxSpeedKph > 0) {
-            this.maxSpeedKph = maxSpeedKph;
-        } else {
-            System.out.println("Warning: maxSpeedKph must be positive! Setting to 10.0.");
-            this.maxSpeedKph = 10.0;
+        if (maxSpeedKph <= 0) {
+            throw new IllegalArgumentException("Max speed cannot be negative and zero");
         }
+        this.maxSpeedKph = maxSpeedKph;
     }
     public void setHasHeartRateMonitor(boolean hasHeartRateMonitor) {
         this.hasHeartRateMonitor = hasHeartRateMonitor;
@@ -39,6 +37,11 @@ public class CardioEquipment extends Equipment {
     public String getEquipmentInfo() {
         return super.getEquipmentInfo() + ", Type: " + getEquipmentType() + ", Max speed: " + maxSpeedKph + " kph"
                 + ", HR monitor: " + (hasHeartRateMonitor ? "Yes" : "No");
+    }
+
+    @Override
+    public void start(){
+        System.out.println(equipmentType + " exercise is starting");
     }
 
     @Override

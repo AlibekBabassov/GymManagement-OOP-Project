@@ -1,6 +1,6 @@
-package com.alibek.gym;
+package model;
 
-public class Equipment {
+public abstract class Equipment {
     protected String equipmentId;
     protected String name;
     protected String equipmentType;
@@ -38,56 +38,48 @@ public class Equipment {
 
     // setters
     public void setEquipmentId(String equipmentId) {
-        if (equipmentId != null && !equipmentId.trim().isEmpty()) {
-            this.equipmentId = equipmentId;
-        } else {
-            System.out.println("Warning: Equipment ID cannot be empty!");
+        if (equipmentId == null || equipmentId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Equipment ID cannot be empty");
         }
+        if (equipmentId.length() < 3) {
+            throw new IllegalArgumentException("Equipment ID  must be at least 3 characters");
+        }
+        this.equipmentId = equipmentId;
     }
     public void setName(String name) {
-        if (name != null && !name.trim().isEmpty()) {
-            this.name = name;
-        } else {
-            System.out.println("Warning: Name cannot be empty!");
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Equipment name cannot be empty");
         }
+        if (name.length() < 3) {
+            throw new IllegalArgumentException("Equipment name must be at least 3 characters");
+        }
+        this.name = name;
     }
     public void setEquipmentType(String equipmentType) {
-        if (equipmentType != null && !equipmentType.trim().isEmpty()) {
-            this.equipmentType = equipmentType;
-        } else {
-            System.out.println("Warning: Equipment type cannot be empty! Setting to 'General'.");
-            this.equipmentType = "General";
+        if (equipmentType == null || equipmentType.trim().isEmpty()) {
+            throw new IllegalArgumentException("Equipment Type cannot be empty");
         }
+        if (equipmentType.length() < 3) {
+            throw new IllegalArgumentException("Equipment Type must be at least 3 characters");
+        }
+        this.equipmentType = equipmentType;
     }
     public void setAvailable(boolean available) {
         this.isAvailable = available;
     }
     public void setUsageCount(int usageCount) {
-        if (usageCount >= 0) {
-            this.usageCount = usageCount;
-        } else {
-            System.out.println("Warning: Usage count cannot be negative! Setting to 0.");
-            this.usageCount = 0;
+        if (usageCount < 0) {
+            throw new IllegalArgumentException("Usage count cannot be negative");
         }
+        this.usageCount = usageCount;
     }
 
     public String getEquipmentInfo() {
         return "Equipment ID: " + equipmentId + ", Name: " + name;
     }
 
-    public String getType() {
-        return "Gym equipment";
-    }
-
-    public void activateEquipment() {
-        this.isAvailable = true;
-        System.out.println(name + " is now available.");
-    }
-
-    public void deactivateEquipment() {
-        this.isAvailable = false;
-        System.out.println(name + " is now not available.");
-    }
+    public abstract void start();
+    public abstract String getType();
 
     public void reserveEquipment() {
         if (this.isAvailable) {

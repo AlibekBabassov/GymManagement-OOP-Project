@@ -1,4 +1,4 @@
-package com.alibek.gym;
+package model;
 
 public class WorkoutSession {
     private String sessionId;
@@ -49,41 +49,43 @@ public class WorkoutSession {
 
     // Setters
     public void setSessionId(String sessionId){
-        if(sessionId != null && !sessionId.trim().isEmpty()){
-            this.sessionId = sessionId;
-        }else{
-            System.out.println("Warning: SessionID cannot be empty!");
+        if (sessionId == null || sessionId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Session ID cannot be empty");
         }
+        if (sessionId.length() < 3) {
+            throw new IllegalArgumentException("Session ID must be at least 3 characters");
+        }
+        this.sessionId = sessionId;
     }
     public void setDate(String date){
-        if(date != null && !date.trim().isEmpty()){
-            this.date = date;
-        }else{
-            System.out.println("Warning: Date cannot be empty!");
+        if (date == null || date.trim().isEmpty()) {
+            throw new IllegalArgumentException("Date cannot be empty");
         }
+        if (date.length() < 4) {
+            throw new IllegalArgumentException("Date must be at least 4 characters");
+        }
+        this.date = date;
     }
     public void setDurationMinutes(int durationMinutes){
-        if(durationMinutes > 0){
-            this.durationMinutes = durationMinutes;
-        }else{
-            System.out.println("Warning: Duration cannot be negative or 0! Setting to 60.");
-            this.durationMinutes = 60;
+        if (durationMinutes <= 0) {
+            throw new IllegalArgumentException("Duration in minutes cannot be negative and zero");
         }
+        this.durationMinutes = durationMinutes;
     }
     public void setCaloriesBurned(double caloriesBurned){
-        if(caloriesBurned >= 0){
-            this.caloriesBurned = caloriesBurned;
-        }else{
-            System.out.println("Warning: Calories cannot be negative! Setting to 0.");
-            this.caloriesBurned = 0;
+        if (caloriesBurned < 0) {
+            throw new IllegalArgumentException("Burned calories cannot be negative");
         }
+        this.caloriesBurned = caloriesBurned;
     }
     public void setIntensityLevel(String intensityLevel){
-        if(intensityLevel != null && !intensityLevel.trim().isEmpty()){
-            this.intensityLevel = intensityLevel;
-        }else{
-            System.out.println("Warning: Intensity level cannot be empty!");
+        if (intensityLevel == null || intensityLevel.trim().isEmpty()) {
+            throw new IllegalArgumentException("Intensity level cannot be empty");
         }
+        if (intensityLevel.length() < 3) {
+            throw new IllegalArgumentException("Intensity level must be at least 3 characters");
+        }
+        this.intensityLevel = intensityLevel;
     }
     public void setActive(boolean active) {
         this.active = active;

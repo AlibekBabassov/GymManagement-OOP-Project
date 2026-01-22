@@ -1,6 +1,6 @@
-package com.alibek.gym;
+package model;
 
-public class GymMember {
+public class GymMember implements Trainable {
     private String name;
     private int age;
     private double weightKg;
@@ -37,40 +37,48 @@ public class GymMember {
     }
 //setters
     public void setName(String name){
-        if(name != null && !name.trim().isEmpty()){
-            this.name = name;
-        }else{
-            System.out.println("Warning: Name cannot be empty!");
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Member name cannot be empty");
         }
+        if (name.length() < 3) {
+            throw new IllegalArgumentException("Member name must be at least 3 characters");
+        }
+        this.name = name;
     }
     public void setAge(int age){
-        if(age >= 0){
-            this.age = age;
-        }else{
-            System.out.println("Warning: Age cannot be negative! Setting to 16.");
-            this.age = 16;
+        if (age <= 0) {
+            throw new IllegalArgumentException("Age cannot be negative and zero");
         }
+        this.age = age;
     }
     public void setWeightKg(double weightKg){
-        if(weightKg > 0){
-            this.weightKg = weightKg;
-        }else{
-            System.out.println("Warning: Weight cannot be negative and 0! Setting to 60.");
-            this.weightKg = 60;
+        if (weightKg <= 0) {
+            throw new IllegalArgumentException("Weight cannot be negative and zero");
         }
+        this.weightKg = weightKg;
     }
     public void setHeightMeters(double heightMeters){
-        if(heightMeters > 0){
-            this.heightMeters = heightMeters;
-        }else{
-            System.out.println("Warning: Height cannot be negative and 0! Setting to 175.");
-            this.heightMeters = 175;
+        if (heightMeters<= 0) {
+            throw new IllegalArgumentException("Height cannot be negative and zero");
         }
+        this.heightMeters = heightMeters;
     }
     public void setMembershipActive(boolean membershipActive){
         this.membershipActive = membershipActive;
     }
 
+    @Override
+    public void train(){
+        System.out.println("🏋️‍♂️ Training " + name + "...");
+        System.out.println("   Age: " + age);
+        System.out.println("   Weight: " + weightKg + " Kg");
+        System.out.println("✅ " + name + " is ready to everything!");
+    }
+
+    @Override
+    public String getTrainingPlan(){
+        return "Plan for " + name + " : 100 Push ups, 100 Pull ups, and 10 km running";
+    }
 
     public void activateMembership(){
         this.membershipActive = true;
