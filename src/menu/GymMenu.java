@@ -2,7 +2,10 @@ package menu;
 
 import model.*;
 import exception.InvalidInputException;
+
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class GymMenu implements Menu {
@@ -19,9 +22,9 @@ public class GymMenu implements Menu {
             allEquipment.add(new StrengthEquipment("0001", "Barbel", "Strength", true, 0, 300, true));
             allEquipment.add(new CardioEquipment("0011", "treadmill", "Cardio", true, 0, 20, false));
 
-            allMembers.add(new GymMember("Sunkar", 20, 55, 165, false));
-            allMembers.add(new GymMember("Sungat", 21, 70, 180, true));
-            allMembers.add(new GymMember("Dastan", 19, 65, 175, false));
+            allMembers.add(new GymMember(1, "Sunkar", 20, 55, 165, false));
+            allMembers.add(new GymMember(2, "Sungat", 21, 70, 180, true));
+            allMembers.add(new GymMember(3, "Dastan", 19, 65, 175, false));
         } catch (IllegalArgumentException e) {
             System.out.println("Error initializing test data: " + e.getMessage());
         }
@@ -162,11 +165,11 @@ public class GymMenu implements Menu {
             CardioEquipment cardioEquipment = new CardioEquipment(equipmentId, name, equipmentType, isAvailable, usageCount, maxSpeedKph, hasHeartRateMonitor);
             allEquipment.add(cardioEquipment);
             System.out.println("\n Cardio equipment added successfully✅");
-        } catch (java.util.InputMismatchException e) {
-            System.out.println("❌ Error: Invalid input type!");
+        } catch(java.util.InputMismatchException e){
+            System.out.println("Invalid type of Input");
             scanner.nextLine();
-        } catch (IllegalArgumentException e) {
-            System.out.println("❌ Validation Error: " + e.getMessage());
+        } catch(IllegalArgumentException e){
+            System.out.println("Invalid input" + e.getMessage());
         }
     }
     private void viewAllEquipment() {
@@ -262,10 +265,13 @@ public class GymMenu implements Menu {
         System.out.println("\n✅ As you can see, same method (start()) but different behavior!");
         System.out.println("This is POLYMORPHISM in action!");
     }
-    private void addMember() {
+    private void addMember(){
         try {
             System.out.println("\n--- ADD MEMBER ---");
 
+            System.out.print("Enter memberID: ");
+            int memberID = scanner.nextInt();
+            scanner.nextLine();
             System.out.print("Enter member name: ");
             String name = scanner.nextLine();
             System.out.print("Enter age: ");
@@ -281,7 +287,7 @@ public class GymMenu implements Menu {
             boolean membershipActive = scanner.nextBoolean();
             scanner.nextLine();
 
-            GymMember item = new GymMember(name, age, weightKg, heightMeters, membershipActive);
+            GymMember item = new GymMember(memberID, name, age, weightKg, heightMeters, membershipActive);
 
             allMembers.add(item);
             System.out.println("\nMember added successfully! ✅");
@@ -292,7 +298,7 @@ public class GymMenu implements Menu {
             System.out.println("❌ Validation Error: " + e.getMessage());
         }
     }
-    private void viewAllMembers() {
+    private void viewAllMembers(){
         System.out.println("\n========================================");
         System.out.println("                ALL MEMBERS             ");
         System.out.println("========================================");
