@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 public class GymMenu implements Menu {
     private Scanner scanner;
     private EquipmentDAO equipmentDAO;
