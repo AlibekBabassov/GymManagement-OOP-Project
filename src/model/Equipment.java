@@ -1,33 +1,28 @@
 package model;
 
 public abstract class Equipment {
-    protected String equipmentId;
+    protected int equipmentId;
     protected String name;
-    protected String equipmentType;
     protected boolean isAvailable;
     protected int usageCount;
 
-    public Equipment(String equipmentId, String name, String equipmentType, boolean isAvailable, int usageCount) {
+    public Equipment(int equipmentId, String name, boolean isAvailable, int usageCount) {
         setEquipmentId(equipmentId);
         setName(name);
-        setEquipmentType(equipmentType);
         this.isAvailable = isAvailable;
         setUsageCount(usageCount);
     }
 
     public Equipment() {
-        this("EQ000", "Unknown", "General", true, 0);
+        this(1, "Unknown", true, 0);
     }
 
     // getters
-    public String getEquipmentId() {
+    public int getEquipmentId() {
         return equipmentId;
     }
     public String getName() {
         return name;
-    }
-    public String getEquipmentType() {
-        return equipmentType;
     }
     public boolean isAvailable() {
         return isAvailable;
@@ -37,12 +32,9 @@ public abstract class Equipment {
     }
 
     // setters
-    public void setEquipmentId(String equipmentId) {
-        if (equipmentId == null || equipmentId.trim().isEmpty()) {
-            throw new IllegalArgumentException("Equipment ID cannot be empty");
-        }
-        if (equipmentId.length() < 3) {
-            throw new IllegalArgumentException("Equipment ID  must be at least 3 characters");
+    public void setEquipmentId(int equipmentId) {
+        if (equipmentId <= 0) {
+            throw new IllegalArgumentException("Equipment ID cannot be negative or zero");
         }
         this.equipmentId = equipmentId;
     }
@@ -54,15 +46,6 @@ public abstract class Equipment {
             throw new IllegalArgumentException("Equipment name must be at least 3 characters");
         }
         this.name = name;
-    }
-    public void setEquipmentType(String equipmentType) {
-        if (equipmentType == null || equipmentType.trim().isEmpty()) {
-            throw new IllegalArgumentException("Equipment Type cannot be empty");
-        }
-        if (equipmentType.length() < 3) {
-            throw new IllegalArgumentException("Equipment Type must be at least 3 characters");
-        }
-        this.equipmentType = equipmentType;
     }
     public void setAvailable(boolean available) {
         this.isAvailable = available;
@@ -97,8 +80,7 @@ public abstract class Equipment {
 
     @Override
     public String toString() {
-        return "Equipment{" + "equipmentId = '" + equipmentId + '\'' + ", name = '" + name + '\'' +
-                ", equipmentType = '" + equipmentType + '\'' + ", isAvailable = " + isAvailable +
+        return "Equipment{" + "equipmentId = '" + equipmentId + '\'' + ", name = '" + name + '\'' + ", isAvailable = " + isAvailable +
                 ", usageCount = " + usageCount + "}";
     }
 }

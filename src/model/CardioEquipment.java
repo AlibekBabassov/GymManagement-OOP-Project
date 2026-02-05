@@ -4,14 +4,14 @@ public class CardioEquipment extends Equipment {
     private double maxSpeedKph;
     private boolean hasHeartRateMonitor;
 
-    public CardioEquipment(String equipmentId, String name, String equipmentType, boolean isAvailable, int usageCount, double maxSpeedKph, boolean hasHeartRateMonitor) {
-        super(equipmentId, name, equipmentType, isAvailable, usageCount);
+    public CardioEquipment(int equipmentId, String name, boolean isAvailable, int usageCount, double maxSpeedKph, boolean hasHeartRateMonitor) {
+        super(equipmentId, name, isAvailable, usageCount);
         setMaxSpeedKph(maxSpeedKph);
         this.hasHeartRateMonitor = hasHeartRateMonitor;
     }
 
     public CardioEquipment() {
-        this("EQCARD0", "Unknown Cardio", "Cardio", true, 0, 20.0, false);
+        this(1, "Unknown Cardio", true, 0, 20.0, false);
     }
 
     // getters
@@ -35,13 +35,13 @@ public class CardioEquipment extends Equipment {
 
     @Override
     public String getEquipmentInfo() {
-        return super.getEquipmentInfo() + ", Type: " + getEquipmentType() + ", Max speed: " + maxSpeedKph + " kph"
+        return super.getEquipmentInfo() + ", Type: Cardio, Max speed: " + maxSpeedKph + " kph"
                 + ", HR monitor: " + (hasHeartRateMonitor ? "Yes" : "No");
     }
 
     @Override
     public void start(){
-        System.out.println(equipmentType + " exercise is starting");
+        System.out.println("Cardio exercise is starting");
     }
 
     @Override
