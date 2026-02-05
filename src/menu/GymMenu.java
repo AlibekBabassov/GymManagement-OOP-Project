@@ -4,10 +4,6 @@ import model.*;
 import database.*;
 import exception.InvalidInputException;
 import java.util.List;
-
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -27,17 +23,6 @@ public class GymMenu implements Menu {
         System.out.println("✅ All data is stored in PostgreSQL");
         System.out.println("✅ No in-memory ArrayLists");
         System.out.println("✅ Complete CRUD operations");
-
-        try {
-            allEquipment.add(new StrengthEquipment("0001", "Barbel", "Strength", true, 0, 300, true));
-            allEquipment.add(new CardioEquipment("0011", "treadmill", "Cardio", true, 0, 20, false));
-
-            allMembers.add(new GymMember(1, "Sunkar", 20, 55, 165, false));
-            allMembers.add(new GymMember(2, "Sungat", 21, 70, 180, true));
-            allMembers.add(new GymMember(3, "Dastan", 19, 65, 175, false));
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error initializing test data: " + e.getMessage());
-        }
     }
 
     @Override
@@ -195,11 +180,11 @@ public class GymMenu implements Menu {
             CardioEquipment cardioEquipment = new CardioEquipment(equipmentId, name, isAvailable, usageCount, maxSpeedKph, hasHeartRateMonitor);
             equipmentDAO.insertCardioEquipment(cardioEquipment);
             System.out.println("\n Cardio equipment added successfully✅");
-        } catch(java.util.InputMismatchException e){
-            System.out.println("Invalid type of Input");
+        } catch (java.util.InputMismatchException e) {
+            System.out.println("❌ Error: Invalid input type!");
             scanner.nextLine();
-        } catch(IllegalArgumentException e){
-            System.out.println("Invalid input" + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("❌ Validation Error: " + e.getMessage());
         }
     }
     private void viewAllEquipment() {
@@ -259,36 +244,6 @@ public class GymMenu implements Menu {
             scanner.nextLine();
 
             Equipment existingEquipment = equipmentDAO.getEquipmentById(equipmentId);
-        for (Equipment e : allEquipment) {
-            e.start();
-        }
-
-        System.out.println("\n✅ As you can see, same method (start()) but different behavior!");
-        System.out.println("This is POLYMORPHISM in action!");
-    }
-    private void addMember(){
-        try {
-            System.out.println("\n--- ADD MEMBER ---");
-
-            System.out.print("Enter memberID: ");
-            int memberID = scanner.nextInt();
-            scanner.nextLine();
-            System.out.print("Enter member name: ");
-            String name = scanner.nextLine();
-            System.out.print("Enter age: ");
-            int age = scanner.nextInt();
-            scanner.nextLine();
-            System.out.print("Enter weight(Kg): ");
-            double weightKg = scanner.nextDouble();
-            scanner.nextLine();
-            System.out.print("Enter height: ");
-            double heightMeters = scanner.nextDouble();
-            scanner.nextLine();
-            System.out.print("Is membership active? (true/false): ");
-            boolean membershipActive = scanner.nextBoolean();
-            scanner.nextLine();
-
-            GymMember item = new GymMember(memberID, name, age, weightKg, heightMeters, membershipActive);
 
             if (existingEquipment == null) {
                 System.out.println("❌ No equipment found with ID: " + equipmentId);
@@ -362,14 +317,6 @@ public class GymMenu implements Menu {
             scanner.nextLine();
 
             Equipment equipment = equipmentDAO.getEquipmentById(equipmentId);
-    private void viewAllMembers(){
-        System.out.println("\n========================================");
-        System.out.println("                ALL MEMBERS             ");
-        System.out.println("========================================");
-        if (allMembers.isEmpty()) {
-            System.out.println("No members found.");
-            return;
-        }
 
             if (equipment == null) {
                 System.out.println("❌ No equipment found with ID: " + equipmentId);
