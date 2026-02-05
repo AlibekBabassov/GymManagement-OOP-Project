@@ -6,6 +6,7 @@ import exception.InvalidInputException;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class GymMenu implements Menu {
     private Scanner scanner;
     private EquipmentDAO equipmentDAO;
