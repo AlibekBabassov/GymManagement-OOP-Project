@@ -4,14 +4,14 @@ public class StrengthEquipment extends Equipment {
     private double maxWeightKg;
     private boolean isAdjustable;
 
-    public StrengthEquipment(String equipmentId, String name, String equipmentType, boolean isAvailable, int usageCount, double maxWeightKg, boolean isAdjustable) {
-        super(equipmentId, name, equipmentType, isAvailable, usageCount);
+    public StrengthEquipment(int equipmentId, String name, boolean isAvailable, int usageCount, double maxWeightKg, boolean isAdjustable) {
+        super(equipmentId, name, isAvailable, usageCount);
         setMaxWeightKg(maxWeightKg);
         this.isAdjustable = isAdjustable;
     }
 
     public StrengthEquipment() {
-        this("EQSTR0", "Unknown Strength", "Strength", true, 0, 100.0, true);
+        this(1, "Unknown Strength", true, 0, 100.0, true);
     }
 
     // getters
@@ -35,12 +35,12 @@ public class StrengthEquipment extends Equipment {
 
     @Override
     public String getEquipmentInfo() {
-        return super.getEquipmentInfo() + ", Type: " + getEquipmentType() + ", Max weight: " + maxWeightKg + " kg" + ", Adjustable: " + (isAdjustable ? "Yes" : "No");
+        return super.getEquipmentInfo() + ", Type: Strength, Max weight: " + maxWeightKg + " kg" + ", Adjustable: " + (isAdjustable ? "Yes" : "No");
     }
 
     @Override
     public void start(){
-        System.out.println(equipmentType + " exercise is starting");
+        System.out.println("Strength exercise is starting");
     }
 
     @Override
