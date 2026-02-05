@@ -1,13 +1,15 @@
 package model;
 
 public class GymMember implements Trainable {
+    private int memberID;
     private String name;
     private int age;
     private double weightKg;
     private double heightMeters;
     private boolean membershipActive;
 
-    public GymMember(String name, int age, double weightKg, double heightMeters, boolean membershipActive){
+    public GymMember(int memberID, String name, int age, double weightKg, double heightMeters, boolean membershipActive){
+        setMemberID(memberID);
         setName(name);
         setAge(age);
         setWeightKg(weightKg);
@@ -16,10 +18,11 @@ public class GymMember implements Trainable {
     }
 
     public GymMember(){
-        this("Unknown", 16, 60.0, 1.75, false);
+        this(0,"Unknown", 16, 60.0, 1.75, false);
     }
 
 //getters
+    public int getMemberID(){return memberID;}
     public String getName(){
         return name;
     }
@@ -36,6 +39,12 @@ public class GymMember implements Trainable {
         return membershipActive;
     }
 //setters
+    public void setMemberID(int memberID){
+        if (memberID <= 0) {
+            throw new IllegalArgumentException("Member ID cannot be negative or zero");
+        }
+        this.memberID = memberID;
+    }
     public void setName(String name){
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Member name cannot be empty");
@@ -95,7 +104,7 @@ public class GymMember implements Trainable {
 
     @Override
     public String toString(){
-        return "GymMember{" + "name = '" + name + "'" + ", age = " + age + ", weightKg = " + weightKg +
+        return "GymMember{" + "memberID = " + memberID + ", name = '" + name + "'" + ", age = " + age + ", weightKg = " + weightKg +
                 ", heightMeters = " + heightMeters + ", membershipActive = " + membershipActive + "}";
     }
 }
